@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Doorway | Soul Growth Circle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#12190d;
+    --navy-panel:#1c2716;
+    --navy-card:#26341f;
+    --gold:#cda15b;
+    --gold-soft:#e3c284;
+    --cream:#f2ede2;
+    --lavender:#98a58a;
+    --ember:#e79a63;
+    --line:rgba(205,161,91,0.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy-deep);
+    color:var(--cream);
+    font-family:'Karla',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .eyebrow{
+    font-family:'Karla',sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    display:flex;
+    align-items:center;
+    gap:0.75rem;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:28px;
+    height:1px;
+    background:var(--gold);
+  }
+  .sr-only{
+    position:absolute;width:1px;height:1px;
+    padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+
+  /* ================= HUB ================= */
+  #hub{
+    transition:opacity 0.5s ease;
+  }
+  #hub.hidden{
+    display:none;
+  }
+
+  .hero{position:relative;width:100%;line-height:0;}
+  .hero img{width:100%;height:auto;display:block;}
+  .hero-fade{
+    position:absolute;left:0;right:0;bottom:-1px;height:14%;
+    background:linear-gradient(180deg, transparent 0%, var(--navy-deep) 100%);
+    pointer-events:none;
+  }
+
+  .doorways{background:var(--navy-deep);padding:9vh 6vw 10vh;}
+  .doorways-head{text-align:center;max-width:600px;margin:0 auto 4rem;}
+  .doorways-head .eyebrow{justify-content:center;}
+  .doorways-head h3{
+    margin-top:1.2rem;font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(1.6rem,3.4vw,2.3rem);
+  }
+  .doorways-head p{margin-top:0.9rem;color:var(--lavender);font-size:0.98rem;line-height:1.6;}
+  .grid{max-width:920px;margin:0 auto;display:grid;gap:1.1rem;}
+  .door-card{
+    background:var(--navy-card);border:1px solid var(--line);border-radius:6px;
+    padding:1.9rem 2.1rem;display:grid;grid-template-columns:auto 1fr auto;
+    align-items:center;gap:1.5rem;text-decoration:none;color:inherit;
+    transition:border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    cursor:pointer;width:100%;text-align:left;font:inherit;
+  }
+  .door-card:hover{border-color:var(--gold);background:#31432a;transform:translateY(-2px);}
+  .door-icon{
+    width:42px;height:42px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    border-radius:50%;border:1px solid var(--line);
+  }
+  .door-icon svg{width:20px;height:20px;stroke:var(--gold-soft);}
+  .door-text h4{
+    font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+    font-size:1.35rem;color:var(--gold-soft);
+  }
+  .door-text p{margin-top:0.35rem;font-size:0.92rem;color:var(--lavender);line-height:1.5;}
+  .door-arrow{font-size:1.2rem;color:var(--gold);transition:transform 0.25s ease;}
+  .door-card:hover .door-arrow{transform:translateX(4px);}
+
+  .continues{
+    background:var(--navy-panel);
+    padding:10vh 6vw;
+    display:flex;justify-content:center;
+    border-top:1px solid var(--line);
+  }
+  .continues-inner{max-width:600px;text-align:center;}
+  .continues .eyebrow{justify-content:center;}
+  .continues h3{
+    margin-top:1rem;font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:clamp(1.5rem,3.2vw,2rem);color:var(--gold-soft);
+  }
+  .continues p{margin-top:1.3rem;font-size:0.98rem;line-height:1.75;color:var(--lavender);}
+  .continues-features{
+    margin:3rem 0;display:grid;gap:1.6rem;text-align:left;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .continues-feature h5{
+    font-family:'Cormorant Garamond',serif;font-weight:500;font-style:italic;
+    font-size:1.05rem;color:var(--gold-soft);margin-bottom:0.4rem;
+  }
+  .continues-feature p{margin-top:0;font-size:0.85rem;color:var(--lavender);line-height:1.55;}
+  .continues-close{
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;
+    color:var(--cream);margin-top:2.6rem;margin-bottom:1.6rem;
+  }
+  .continues-cta{
+    display:inline-block;padding:0.95rem 2.4rem;background:var(--gold);
+    border:1px solid var(--gold);border-radius:4px;color:#1a1a1a;
+    text-decoration:none;font-size:0.78rem;letter-spacing:0.1em;
+    text-transform:uppercase;font-weight:600;
+    transition:background 0.25s ease,color 0.25s ease;
+  }
+  .continues-cta:hover{background:var(--gold-soft);border-color:var(--gold-soft);}
+
+  footer{
+    background:linear-gradient(180deg, var(--navy-panel) 0%, #171f11 100%);
+    border-top:1px solid var(--line);
+    text-align:center;padding:2.4rem 6vw;
+    font-size:0.78rem;color:var(--lavender);
+  }
+  footer .tagline{color:var(--gold-soft);letter-spacing:0.06em;font-size:0.72rem;text-transform:uppercase;}
+  footer .links{margin-top:0.7rem;}
+  footer .links a{color:var(--lavender);text-decoration:none;margin:0 0.4rem;}
+  footer .links a:hover{color:var(--gold-soft);}
+
+  @media (max-width:640px){
+    .continues-features{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:640px){
+    .door-card{grid-template-columns:auto 1fr;padding:1.5rem;}
+    .door-arrow{display:none;}
+  }
+
+  /* ================= DOORWAY VIEW (full arrival, one file, no new pages) ================= */
+  #doorway-view{
+    display:none;
+    min-height:100vh;
+    padding:8vh 6vw 6vh;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    transition:opacity 0.6s ease;
+  }
+  #doorway-view.active{
+    display:flex;
+    opacity:1;
+  }
+  .doorway-inner{
+    max-width:620px;
+    width:100%;
+    text-align:center;
+  }
+  .doorway-inner .eyebrow{justify-content:center;margin-bottom:1.3rem;}
+  .doorway-inner h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:clamp(1.9rem,4vw,2.6rem);
+    color:var(--gold-soft);
+    line-height:1.25;
+    margin-bottom:1.8rem;
+  }
+  .recognition-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.05rem,2vw,1.25rem);
+    line-height:1.75;
+    color:var(--cream);
+    max-width:52ch;
+    margin:0 auto 2.6rem;
+  }
+  .audio-block{
+    background:rgba(0,0,0,0.18);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.6rem 1.8rem;
+    margin-bottom:2.2rem;
+  }
+  .audio-label{
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:0.9rem;
+  }
+  audio{width:100%;}
+  .audio-note{
+    margin-top:0.8rem;
+    font-size:0.78rem;
+    color:var(--lavender);
+    font-style:italic;
+  }
+  .next-step-block{
+    margin-bottom:0.5rem;
+  }
+  .next-step-label{
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:1.1rem;
+  }
+  .fork-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:0.9rem;
+  }
+  .fork-btn{
+    display:block;
+    width:100%;
+    padding:1rem 1.4rem;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:0.85rem;
+    letter-spacing:0.02em;
+    text-align:center;
+    cursor:pointer;
+    font-family:'Karla',sans-serif;
+    transition:background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .fork-btn-primary{
+    background:var(--gold);
+    border:1px solid var(--gold);
+    color:#1a1a1a;
+    font-weight:600;
+  }
+  .fork-btn-primary:hover{background:var(--gold-soft);border-color:var(--gold-soft);}
+  .fork-btn-secondary{
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--lavender);
+  }
+  .fork-btn-secondary:hover{border-color:var(--gold);color:var(--gold-soft);}
+</style>
+</head>
+<body>
+
+<div id="hub">
+
+  <section class="hero">
+    <img src="find-your-doorway-hero.png" alt="An open wooden door in a stone wall leads to a golden sunlit path through wildflowers. Text reads: Find Your Doorway. Four doorways, one path home. However you arrived, there's a place for you here.">
+    <div class="hero-fade"></div>
+  </section>
+  <h1 class="sr-only">Find Your Doorway — Soul Growth Circle Welcome</h1>
+
+  <section class="doorways">
+    <div class="doorways-head">
+      <p class="eyebrow">Find Your Doorway</p>
+      <h3>Step through the doorway that feels closest to yours.</h3>
+    </div>
+
+    <div class="grid">
+
+      <button class="door-card" onclick="openDoorway(1)">
+        <span class="door-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 13c0-3 2-5 4-7 2 2 4 4 4 7a4 4 0 0 1-8 0z"/>
+          </svg>
+        </span>
+        <span class="door-text">
+          <h4>When Your Mind Won't Stop</h4>
+          <p>My mind won't slow down, even when life is quiet.</p>
+        </span>
+        <span class="door-arrow">→</span>
+      </button>
+
+      <button class="door-card" onclick="openDoorway(2)">
+        <span class="door-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-4.5-9.5-9C.7 8 2 4 6 4c2.2 0 3.7 1.3 4.5 2.6C11.3 5.3 12.8 4 15 4c4 0 5.3 4 3.5 8-2.5 4.5-9.5 9-9.5 9z"/>
+          </svg>
+        </span>
+        <span class="door-text">
+          <h4>When Your Body Won't Settle</h4>
+          <p>I've done the work, but my body still won't relax.</p>
+        </span>
+        <span class="door-arrow">→</span>
+      </button>
+
+      <button class="door-card" onclick="openDoorway(3)">
+        <span class="door-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 8.5c0 5.5-8 10.5-8 10.5S4 14 4 8.5A4.5 4.5 0 0 1 8.5 4c1.4 0 2.6.7 3.5 1.8A4.4 4.4 0 0 1 15.5 4 4.5 4.5 0 0 1 20 8.5z" opacity="0.35"/>
+            <path d="M2 20c2-4 4-4 6-2s4 2 6 0 4-2 6 2" opacity="0.6"/>
+          </svg>
+        </span>
+        <span class="door-text">
+          <h4>When You've Been Carrying Everyone Else</h4>
+          <p>I've taken care of everyone else, and I've lost touch with myself.</p>
+        </span>
+        <span class="door-arrow">→</span>
+      </button>
+
+      <button class="door-card" onclick="openDoorway(4)">
+        <span class="door-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M14.5 9.5 12 12l-2.5 2.5L12 12l2.5-2.5z"/>
+            <circle cx="12" cy="12" r="1" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="door-text">
+          <h4>When You Don't Know Where to Begin</h4>
+          <p>I don't know where to start. I just know something has to change.</p>
+        </span>
+        <span class="door-arrow">→</span>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="continues">
+    <div class="continues-inner">
+      <p class="eyebrow">The Journey Continues</p>
+      <h3>You don't have to navigate every moment alone.</h3>
+      <p>The doorway helped you notice what you need today. Inside Soul Growth Circle, you'll learn how to meet difficult moments with more steadiness, understand what's happening within you, and return to yourself again and again.</p>
+      <p>This isn't about fixing yourself or getting every moment right. It's about building a relationship with yourself that you can rely on when life feels uncertain, heavy, or overwhelming.</p>
+
+      <div class="continues-features">
+        <div class="continues-feature">
+          <h5>Guided Practices</h5>
+          <p>Simple experiences that help you pause, listen, and return.</p>
+        </div>
+        <div class="continues-feature">
+          <h5>A Path to Follow</h5>
+          <p>Begin with Find Your Footing, then explore the classroom at your own pace.</p>
+        </div>
+        <div class="continues-feature">
+          <h5>A Community Beside You</h5>
+          <p>A quiet, supportive space filled with people practicing alongside you.</p>
+        </div>
+      </div>
+
+      <p class="continues-close">You've found the doorway. Now you can continue the journey inward.</p>
+      <a href="https://www.skool.com/bodydialoguemethod/about" class="continues-cta">Enter Soul Growth Circle →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p class="tagline">Soul Growth Circle · Return to Yourself, One Moment at a Time</p>
+    <p class="links"><a href="https://tinalshafer.com/privacy-policy/">Privacy Policy</a> · <a href="https://tinalshafer.com/disclaimer/">Disclaimer</a> · <a href="https://tinalshafer.com/terms-conditions/">Terms</a></p>
+  </footer>
+
+</div>
+
+<!-- ============ DOORWAY VIEW — one shared container, content swapped by JS ============ -->
+<div id="doorway-view">
+  <div class="doorway-inner">
+    <p class="eyebrow" id="dw-eyebrow">Doorway One</p>
+    <h2 id="dw-title">When Your Mind Won't Stop</h2>
+    <p class="recognition-text" id="dw-recognition">Recognition text loads here.</p>
+
+    <div class="audio-block">
+      <div class="audio-label">🕯️ Listen Now</div>
+      <audio controls id="dw-audio">
+        <source src="" type="audio/mpeg">
+      </audio>
+      <div class="audio-note" id="dw-audio-note">Audio not yet recorded.</div>
+    </div>
+
+    <div class="next-step-block">
+      <p class="next-step-label">Your Next Step</p>
+
+      <div class="fork-buttons">
+        <a href="https://www.skool.com/bodydialoguemethod/classroom/cb90bb71?md=6ca728cca7ef4ce6b91615c5958e091e" class="fork-btn fork-btn-primary">🌿 Begin Find Your Footing</a>
+        <span class="fork-btn fork-btn-secondary" onclick="closeDoorway()">← Explore More Doorways</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const doorways = {
+  1: {
+    eyebrow: "Doorway One",
+    title: "When Your Mind Won't Stop",
+    recognition: "Have you ever noticed how exhausting it is to be in your own head? Not because thinking is the problem, minds think, that's what they do. The hard part is when they never seem to stop.",
+    audio: "doorway-1-audio.mp3"
+  },
+  2: {
+    eyebrow: "Doorway Two",
+    title: "When Your Body Won't Settle",
+    recognition: "You finally sit down, and your shoulders are still tight. The day is over, but your body is still waiting for the next thing. You tell yourself it's okay to rest, yet something inside you stays wide awake.",
+    audio: "doorway-2-audio.mp3"
+  },
+  3: {
+    eyebrow: "Doorway Three",
+    title: "When You've Been Carrying Everyone Else",
+    recognition: "If this is the doorway you chose, I have a feeling you've become someone people rely on. Not because you asked for that role, because you're the one who notices.",
+    audio: "doorway-3-audio.mp3"
+  },
+  4: {
+    eyebrow: "Doorway Four",
+    title: "When You Don't Know Where to Begin",
+    recognition: "You don't have to have your life figured out to belong here. You don't have to know exactly what's wrong. Sometimes all you know is that something inside of you is asking for a different way.",
+    audio: "doorway-4-audio.mp3"
+  }
+};
+
+function openDoorway(n){
+  const d = doorways[n];
+  document.getElementById('dw-eyebrow').textContent = d.eyebrow;
+  document.getElementById('dw-title').textContent = d.title;
+  document.getElementById('dw-recognition').textContent = d.recognition;
+
+  const audioEl = document.getElementById('dw-audio');
+  const noteEl = document.getElementById('dw-audio-note');
+  if(d.audio){
+    audioEl.querySelector('source').src = d.audio;
+    audioEl.load();
+    audioEl.style.display = 'block';
+    noteEl.style.display = 'none';
+  } else {
+    audioEl.style.display = 'none';
+    noteEl.style.display = 'block';
+    noteEl.textContent = 'This experience is being re-recorded — check back soon.';
+  }
+
+  document.getElementById('hub').classList.add('hidden');
+  document.getElementById('doorway-view').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function closeDoorway(){
+  document.getElementById('doorway-view').classList.remove('active');
+  document.getElementById('hub').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+</script>
+
+</body>
+</html>
